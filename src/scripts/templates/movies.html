@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row">
+    {{#this}}
+      <div class="col-sm-6 col-md-3 col-lg-4">
+        <div class="user">
+          <div class="user-info">
+            <h3>{{ name }}</h3>
+            <p>{{ email }}</p>
+            <address>
+              {{ address.suite }}<br />
+              {{ address.street }}<br />
+              {{ address.city }}<br />
+              {{ address.zipcode }}
+            </address>
+          </div>
+          <div class="user-contact">
+            <p>{{ phone }}</p>
+            {{#link website}}{{/link}}
+          </div>
+        </div>
+        <div class="user-posts">
+          {{#each posts}}
+            <div class="user-post">
+              <h5>{{ post.title }}</h5>
+            </div>
+          {{/each}}
+        </div>
+      </div>
+    {{/this}}
+  </div>
+</div>

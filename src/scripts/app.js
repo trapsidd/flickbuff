@@ -1,16 +1,24 @@
-(function($, Backbone, _,hbs) {
+define([
+  'jquery',
+  'backbone',
+  'handlebars',
+  'collections/movie-collection',
+  'views/movie-collection-view',
+  'text!templates/app.html'
+], function($, Backbone, hbs, MC, MCView, AppTemplate) {
   var AppView = Backbone.View.extend({
     el : $('#wrapper'),
-    template : hbs.compile($('#app-template').html()),
+    template : hbs.compile(AppTemplate),
     initialize: function() {
       this.render();
     },
     render: function() {
-      this.$el.html(this.template({
-        title: '[ flickbuff ]',
-      }));
+      var mcView = new MCView({
+        collection: new MC()
+      });
+      this.$el.append(mcView.render().el);
     }
   });
 
-  var app = new AppView();
-})(jQuery, Backbone, _, Handlebars);
+  return AppView;
+});

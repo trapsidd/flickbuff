@@ -1,43 +1,37 @@
 module.exports = function(grunt) {
+  require('load-grunt-tasks')(grunt);
+
   grunt.initConfig({
     watch: {
-      copy: {
-        files: 'src/index.html',
-        tasks: ['copy']
-      },
       sass: {
         files: 'src/**/*.scss',
         tasks: ['sass']
-      },
-      concat: {
-        files: 'src/**/*.js',
-        tasks: ['concat']
       }
     },
-    copy: {
-      main: {
-        expand: true,
-        cwd: 'src',
-        src: '**/*.html',
-        dest: 'dist/',
+    requirejs: {
+      build: {
+        options: {
+          baseUrl: ".",
+          mainConfigFile: "src/scripts/main.js",
+          include: [
+            'src/scripts/app.js'
+          ],
+          out: ".build/js/app.js"
+        }
       }
     },
-    concat: {
-      options: {
-        separator: ';',
-      },
-      dist: {
-        src: ['src/scripts/app.js'],
-        dest: 'dist/js/app.js',
-      },
+    clean: {
+      build: {
+        src: ['./.build']
+      }
     },
     sass: {
   		options: {
   			outputStlye: 'compressed'
   		},
-  		dist: {
+  		dev: {
   			files: {
-  				'dist/css/styles.css': 'src/sass/main.scss'
+  				'.build/css/styles.css': 'src/sass/main.scss'
   			}
   		}
   	},
@@ -45,26 +39,20 @@ module.exports = function(grunt) {
       dev: {
         bsFiles: {
           src : [
-            'dist/css/*.css',
-            'dist/*.html'
+            '.build/css/*.css',
+            '.build/js/*.js',
+            'src/*.html'
           ]
         },
         options: {
           watchTask: true,
-          server: './dist',
-          serveStatic: ['.', './bower_components']
+          server: '.',
+          serveStatic: ['src', 'bower_components', '.build']
         }
       }
     }
   });
 
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-sass');
-  grunt.loadNpmTasks('grunt-browser-sync');
-
-  grunt.registerTask('dev', ['copy', 'sass', 'concat', 'browserSync', 'watch']);
-  grunt.registerTask('build', ['copy', 'sass', 'concat']);
+  grunt.registerTask('dev', ['clean', 'sass', 'browserSync', 'watch']);
+  grunt.registerTask('build', ['clean', 'sass', 'concat']);
 }

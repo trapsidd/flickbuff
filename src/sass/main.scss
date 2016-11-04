@@ -1,20 +1,13 @@
-@font-face {
-    font-family: 'customFont';
-    src: url("../src/sass/fonts/customFont.woff") format('woff');
-}
+@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
 
 body {
-  background-color: #333333;
+  // background-color: #333333;
+  padding-top: 60px;
 }
 
-#logo a{
-  margin-top: 1cm;
-  display: block;
-  text-align: center;
-  text-decoration: none;
-  color: #F9C75E;
-  text-shadow: 3px 3px black;
-  font-family: customFont;
-  font-size: 65px;
-  font-weight: bold;
+.user {
+  min-height: 280px;
+  margin-bottom: 24px;
+  padding: 12px 20px;
+  background-color: #eee;
 }
